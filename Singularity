@@ -2,6 +2,8 @@ BootStrap: library
 From: ubuntu:latest
 
 %post
+
+    mkdir /revbayes
     
     echo "Installing required packages..."
     
@@ -16,17 +18,21 @@ From: ubuntu:latest
     apt-get install -y libboost-all-dev
 
     # download revbayes
-    git clone --single-branch --branch=development --depth=1 https://github.com/revbayes/revbayes.git /revbayes
+    git clone https://github.com/revbayes/revbayes.git /revbayes-build
+    cd /revbayes-build
+    git checkout 9afdfe377eaffe0dea467b2ce5520fb055c14563
 
 %environment
-    export PATH=$PATH:/revbayes/projects/cmake/
+    export PATH=$PATH:/revbayes
 
 %runscript
     exec rb $@
 
 %appinstall rb
-    cd /revbayes/projects/cmake/
+    cd /revbayes-build/projects/cmake/
+    rm -rf build
     ./build.sh
+    mv rb /revbayes/rb
 
 %apprun rb
     exec rb $@
@@ -35,7 +41,9 @@ From: ubuntu:latest
 
     apt-get install -y libopenmpi-dev
     cd /revbayes/projects/cmake/
+    rm -rf build
     ./build.sh -mpi true
+    mv rb /revbayes/rb-mpi
 
 %apprun rbmpi
     exec rb-mpi $@
