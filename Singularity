@@ -40,7 +40,7 @@ From: ubuntu:latest
 %appinstall rbmpi
 
     apt-get install -y libopenmpi-dev
-    cd /revbayes/projects/cmake/
+    cd /revbayes-build/projects/cmake/
     rm -rf build
     ./build.sh -mpi true
     mv rb /revbayes/rb-mpi
