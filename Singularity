@@ -1,5 +1,5 @@
 BootStrap: library
-From: ubuntu:latest
+From: ubuntu:19.10
 
 %post
 
@@ -20,7 +20,7 @@ From: ubuntu:latest
     # download revbayes
     git clone https://github.com/revbayes/revbayes.git /revbayes-build
     cd /revbayes-build
-    git checkout 9afdfe377eaffe0dea467b2ce5520fb055c14563
+    git checkout 1.1.0
 
 %environment
     export PATH=$PATH:/revbayes
@@ -43,7 +43,7 @@ From: ubuntu:latest
     cd /revbayes-build/projects/cmake/
     rm -rf build
     ./build.sh -mpi true
-    mv rb /revbayes/rb-mpi
+    mv rb-mpi /revbayes/rb-mpi
 
 %apprun rbmpi
     exec rb-mpi $@
